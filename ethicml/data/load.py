@@ -74,7 +74,7 @@ class ConfigurableDataset(LoadableDataset):
             columns.remove(additional)
 
         super().__init__(
-            name=self.filepath_.name,
+            name=Path(self.filepath_).name,
             num_samples=len(dataframe),
             features=columns,
             cont_features=[],
