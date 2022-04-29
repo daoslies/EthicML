@@ -72,7 +72,7 @@ class ConfigurableDataset(LoadableDataset):
         columns.remove(self.y_column)
         for additional in self.additional_to_drop:
             columns.remove(additional)
-
+        print('checkity check', self.filepath_, ' ', Path(self.filepath_).name)
         super().__init__(
             name=Path(self.filepath_).name,
             num_samples=len(dataframe),
