@@ -352,6 +352,11 @@ def fold_data(data: DataTuple, folds: int) -> Iterator[Tuple[DataTuple, DataTupl
         train_x = data.x.iloc[train_inds].reset_index(drop=True)  # type: ignore[call-overload]
         train_s = data.s.iloc[train_inds].reset_index(drop=True)  # type: ignore[call-overload]
         train_y = data.y.iloc[train_inds].reset_index(drop=True)  # type: ignore[call-overload]
+        
+        print(train_x)
+        print(train_x.shape)
+        print(train_s)
+        print(train_s.shape)
 
         assert train_x.shape == (len(train_inds), data.x.shape[1])
         assert train_s.shape == (len(train_inds), data.s.shape[1])
