@@ -278,4 +278,4 @@ class CrossValidator:
                         result[f"{metric.name}_{key}"] = value
                 for key, value in preds.info.items():
                     result[key] = value
-        return CVResults(compute_scores_and_append.results, self.model)
+        return CVResults(compute_scores_and_append.results, self.model), result
