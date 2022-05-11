@@ -239,7 +239,7 @@ class CrossValidator:
                 compute_scores_and_append(experiment, preds, val, i)
         return CVResults(compute_scores_and_append.results, self.model)
 
-    def run(self, train: DataTuple, measures: Optional[List[Metric]] = None, per_sens_metrics) -> CVResults:
+    def run(self, train: DataTuple, per_sens_metrics = None, measures: Optional[List[Metric]] = None) -> CVResults:
         """Run the cross validation experiments.
 
         Args:
