@@ -249,6 +249,9 @@ class CrossValidator:
             CVResults
         """
         compute_scores_and_append = _ResultsAccumulator(measures)
+        
+        result = {}
+        
         for i, (train_fold, val) in enumerate(fold_data(train, folds=self.folds)):
             # run the models one by one and *immediately* report the scores on the measures
             for experiment in self.experiments:
