@@ -252,7 +252,7 @@ class CrossValidator:
         
         result = {}
         use_sens_name = True
-        diff_and_ratios = True
+        diffs_and_ratios = True
         
         for i, (train_fold, val) in enumerate(fold_data(train, folds=self.folds)):
             # run the models one by one and *immediately* report the scores on the measures
