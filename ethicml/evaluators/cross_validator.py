@@ -251,6 +251,7 @@ class CrossValidator:
         compute_scores_and_append = _ResultsAccumulator(measures)
         
         result = {}
+        use_sens_name = True
         
         for i, (train_fold, val) in enumerate(fold_data(train, folds=self.folds)):
             # run the models one by one and *immediately* report the scores on the measures
@@ -266,7 +267,7 @@ class CrossValidator:
                     result[metric.name] = metric.score(preds, val)
 
                 for metric in per_sens_metrics:
-                    per_sens = metric_per_sensitive_attribute(preds, actual, metric, use_sens_name)
+                    per_sens = metric_per_sensitive_attribute(preds, val, metric, use_sens_name)
                     if diffs_and_ratios:
                         diff_per_sens = diff_per_sensitive_attribute(per_sens)
                         ratio_per_sens = ratio_per_sensitive_attribute(per_sens)
