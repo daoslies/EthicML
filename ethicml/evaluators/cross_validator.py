@@ -247,4 +247,19 @@ class CrossValidator:
                 scores = compute_scores_and_append(experiment, preds, val, i)
                 score_string = ", ".join(f"{k}={v:.4g}" for k, v in scores.items())
                 print(f"fold: {i}, model: '{model.name}', {score_string}, completed!")
+                
+                for metric in measures:
+                    result[metric.name] = metric.score(preds, val)
+
+                for metric in per_sens_metrics:
+                    per_sens = metric_per_sensitive_attribute(preds, actual, metric, use_sens_name)
+                    if diffs_and_ratios:
+                        diff_per_sens = diff_per_sensitive_attribute(per_sens)
+                        ratio_per_sens = ratio_per_sensitive_attribute(per_sens)
+                        per_sens.update(diff_per_sens)
+                        per_sens.update(ratio_per_sens)
+                    for key, value in per_sens.items():
+                        result[f"{metric.name}_{key}"] = value
+                for key, value in preds.info.items():
+                    result[key] = value
         return CVResults(compute_scores_and_append.results, self.model)
