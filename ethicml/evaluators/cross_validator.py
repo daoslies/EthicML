@@ -250,15 +250,21 @@ class CrossValidator:
         """
         compute_scores_and_append = _ResultsAccumulator(measures)
         
-        result = {}
+        
         use_sens_name = True
         diffs_and_ratios = True
+        
+        results_list = []
         
         for i, (train_fold, val) in enumerate(fold_data(train, folds=self.folds)):
             # run the models one by one and *immediately* report the scores on the measures
             for experiment in self.experiments:
+                
                 # instantiate model and run it
                 model = self.model(**experiment)
+                
+                result = { 'Fold' : i, 'Model' : model.name, 'C' : model.C }
+                
                 preds = model.run(train_fold, val)
                 scores = compute_scores_and_append(experiment, preds, val, i)
                 score_string = ", ".join(f"{k}={v:.4g}" for k, v in scores.items())
@@ -278,4 +284,6 @@ class CrossValidator:
                         result[f"{metric.name}_{key}"] = value
                 for key, value in preds.info.items():
                     result[key] = value
-        return CVResults(compute_scores_and_append.results, self.model), result
+                results_list.append(result)    
+                    
+        return CVResults(compute_scores_and_append.results, self.model), results_list
